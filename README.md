@@ -3,7 +3,7 @@
 [![Header](https://github.com/ekaterinatretyak/Programming-SPbU-/blob/main/Ekaterina%20tretyak.png "Header")](https://some-url.dev/)
 <p>Hi there! :wave: This repo is for my hardcore codes in Python. </p>
 
-## :hammer: Stack & Skill
+## :hammer: Stack & Skills
 <b>
   <img alt="Python" src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white" /> 
   <img alt="C#" src="https://img.shields.io/badge/-C%23-239120?style=flat-square&logo=c-sharp&logoColor=white" />
