@@ -40,7 +40,6 @@ def file_processing(data):
         print(lem)
     print([lem for lem in lemmas if lem.count('о') == 2])
 
-
 def write_to_csv(freqDict):
 
     """
