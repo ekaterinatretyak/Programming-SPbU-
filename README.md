@@ -2,7 +2,7 @@
 [![Header](https://github.com/ekaterinatretyak/Programming-SPbU-/blob/main/Ekaterina%20tretyak.png "Header")](https://some-url.dev/)
 <p>Hi there! :wave: This repo is for my</p>
 
-# 🛠 Skills
+# :hammer: Skills
 
 <p><b>Languages:</b><br>
   <img alt="Python" src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white" /> 
