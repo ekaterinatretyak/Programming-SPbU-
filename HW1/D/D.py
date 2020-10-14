@@ -1,3 +1,4 @@
 def solution(total):
-    ### YOUR CODE HERE ###
-    return
+    hours = total % (60 * 24) // 60
+    minutes = total % 60
+    return str(hours) + ' ' + str(minutes)
