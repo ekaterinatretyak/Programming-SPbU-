@@ -5,5 +5,3 @@ def solution(a, b):
         return solution(a, b)
     else:
         return a
-
-print(solution(3,9))
