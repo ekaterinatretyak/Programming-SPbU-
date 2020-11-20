@@ -14,7 +14,7 @@ def take(x, gener):
         res.append(next(gener))
     return res
 
-    # или:
+    # or:
     # res = list(next(gener) for el in range(x))
     # return res
 
