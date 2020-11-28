@@ -11,83 +11,75 @@ class GitHubUser:
 
 
     def __init__(self, users):
-        #self.users = ['torvalds', 'gvanrossum', 'poettering', 'dhh', 'moxie0', 'fabpot', 'brendangregg', 'bcantrill', 'antirez']
-        #self.num_of_users = num
         self.users = users
 
-    def parsing(self):
-        self.selected_user = random.choice(self.users)
-        max_num_of_repo = 0
-        max_num_of_followers = 0
-        req = requests.get(f'https://api.github.com/users/{self.selected_user}')
-        req_for_repos = requests.get(f'https://api.github.com/users/{self.selected_user}/repos?access_token={token}')
-        return self.repositories(req_for_repos), self.used_languages(req_for_repos)
+    def parsing(self, user):
+        #self.selected_user = random.choice(self.users)
+        #req = requests.get(f'https://api.github.com/users/{self.selected_user}')
+        req = requests.get(f'https://api.github.com/users/{user}?access_token={token}')
+        req_for_repos = requests.get(f'https://api.github.com/users/{user}/repos?access_token={token}')
+        return req, req_for_repos
+        #return req_for_repos
+        #return self.repositories(req_for_repos), self.used_languages(req_for_repos), self.max_num_repo(),\
+               #self.most_popular_lang(), self.most_popular_user()
 
-    def repositories(self, req):
+    def repositories(self):
+        self.selected_user = input()
+        req, req_for_repos = self.parsing(self.selected_user)
         repo = {}
-        for i in req.json():
-            repo.update({i["name"]: i["description"]})
-        print("The repositories of user {0} w/ descriptions: {1}".format(self.selected_user, ''.join(key + ' : ' +
-                                                                         value for key, value in repo.items())))
+        # for i in req_for_repos.json():
+        #     print(i['name'])
+        for i in req_for_repos.json():
+            repo.update({i["name"] : i["description"]})
+        return "The repositories of user {0} w/ descriptions: \n {1}".format(self.selected_user, repo.items())
 
-    def used_languages(self, req):
-        all_languages = []
+    def used_languages(self):
+        req, req_for_repos = self.parsing(self.selected_user)
         languages = {}
-        for i in req.json():
+        for i in req_for_repos.json():
             lang = i["language"]
-            all_languages.append(lang)
             languages.update({i["name"]: lang})
         cnt = Counter(languages.values())
-        print("User uses languages: {}".format(list(key + ' : ' + value for key, value in cnt.items())))
+        return "User {0} uses languages: {1}".format(self.selected_user, cnt.items())
 
-    
-        # for us in users:
-        #     repo = {}
-        #     languages = {}
-        #     req = requests.get(f'https://api.github.com/users/{us}/repos?access_token={token}')
-        #     req_for_followers = requests.get(f'https://api.github.com/users/{us}')
-        #     print("User's name: ", us)
-        #     for i in req.json():
-        #         repo.update({i["name"] : i["description"]})
-        #         lang = i["language"]
-        #         all_languages.append(lang)
-        #         languages.update({i["name"] : lang})
-        #     print(req_for_followers.json())
-        #     followers = req_for_followers.json()['followers']
-        #     print("The number of followers: ", followers)
-        #     if followers > max_num_of_followers:
-        #         max_num_of_followers = followers
-        #         most_popular_user = us
-        #
-        #     cnt = Counter(languages.values())
-        #     print("User's repositories w/ descriptions: ", '\n')
-        #     for key, value in repo.items():
-        #         print(key, " : ", value)
-        #     print('\n', "User uses languages: ")
-        #     for key, value in cnt.items():
-        #         print(key, " : ", value, "repositories")
-        #
-        #
-        #     print("Кол-во репозиториев: ", req_for_followers.json()['public_repos'])
-        #     print("----------------------")
-        #     if req_for_followers.json()['public_repos'] > max_num_of_repo:
-        #         max_num_of_repo = req_for_followers.json()['public_repos']
-        #         owner_max_repo = us
-        #     else:
-        #         continue
+    def max_num_repo(self):
+        max_num_of_repo = 0
+        for us in self.users:
+            req, req_for_repos = self.parsing(us)
+            num_of_repo = req.json()['public_repos']
+            if num_of_repo > max_num_of_repo:
+               max_num_of_repo = num_of_repo
+               owner_max_repo = us
+        return "Owner of the largest number of repositories: {0}. {1} of his repositories are available".\
+            format(owner_max_repo, max_num_of_repo)
 
-        # print('\n', "Owner of the largest number of repositories: ", owner_max_repo)
-        # print("The most popular user: ", most_popular_user, '. The number of his followers: ', max_num_of_followers)
-        # self.most_popular_lang(all_languages)
-        #self.most_popular_user(users)
+    def most_popular_lang(self):
+        all_languages = []
+        for us in self.users:
+            req, req_for_repos = self.parsing(us)
+            for i in req_for_repos.json():
+                all_languages.append(i['language'])
 
-    # def most_popular_lang(self, languages):
-    #     langs = Counter(languages)
-    #     print("The most popular language: ", (langs.most_common()[0])[0])
+        langs = Counter(all_languages)
+        return ("The most popular language: {}.".format(langs.most_common()[0][0]))
+
+    def most_popular_user(self):
+        max_num_of_followers = 0
+        for us in self.users:
+            req, req_for_repos = self.parsing(us)
+            followers = req.json()['followers']
+            if followers > max_num_of_followers:
+                max_num_of_followers = followers
+                most_popular_user = us
+        return "The most popular user: {0}. The number of his followers: {1}.".format(most_popular_user, max_num_of_followers)
 
 def main(argv):
     myGitHubParser = GitHubUser(argv)
-    print(myGitHubParser.parsing())
+    print(myGitHubParser.repositories())
+    print(myGitHubParser.used_languages())
+    print(myGitHubParser.max_num_repo())
+    print(myGitHubParser.most_popular_lang())
+    print(myGitHubParser.most_popular_user())
 
 if __name__ == '__main__':
     main(sys.argv[1:])
