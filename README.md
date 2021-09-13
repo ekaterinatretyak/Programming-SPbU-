@@ -1,7 +1,7 @@
 # Programming-SPbU-  <img src="https://uploads-ssl.webflow.com/5dd5b1adcd567c62a35dffb8/5e6796fdb8d9bb603797f20d_GXBKL-A6A1EJJLTS.gif" width="50px">
 <b>*"I'm a programmer. I like programming. And the best way I've found to have a positive impact on code is to write it"* (c) Robert C. Martin </br>
 [![Header](https://github.com/ekaterinatretyak/Programming-SPbU-/blob/main/Ekaterina%20tretyak.png "Header")](https://some-url.dev/)
-<p>Hi there! :wave: This repo is for my hardcore codes in Python. </p>
+<p>Hi there! :wave: This repo is for my hardcore codes in Python. Each branch contains a homework. </p>
 
 ## :hammer: Stack & Skills
 <b>
